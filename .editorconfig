@@ -18,3 +18,4 @@ trim_trailing_whitespace = false
 platforms
 .vscode
 node_modules
+typings
