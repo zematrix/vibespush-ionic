@@ -1,5 +1,6 @@
 {
-  "name": "vibespush-ionic",
+  "name": "com.vibes.edem.test",
+  "displayName": "VibesCordovaTest",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
