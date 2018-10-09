@@ -2,15 +2,15 @@
 module.exports = {
 
   //Cal the sdk to register a device without caring about success or failure
-  configure: function() {
+  configure: function(successCallback, errorCallback) {
     var options = {};
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'configure', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'configure', [options]);
   },
 
-  //Cal the sdk to register a device without caring about success or failure
-  registerDevice: function() {
+  //Cal the sdk to register a device, with appropriate callback methods
+  registerDevice: function(successCallback, errorCallback) {
     var options = {};
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'registerDevice', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'registerDevice', [options]);
   },
 
   //Call the sdk to unregister a device without caring about success or failure

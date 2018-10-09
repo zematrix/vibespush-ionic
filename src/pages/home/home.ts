@@ -19,30 +19,50 @@ export class HomePage {
 
   ionViewDidLoad(){
     if (!this.platform.is('cordova')) {
-      this.displayError();
+      this.displayCordovaError();
     }else{
       this.inCordova = true;
-      vibes.configure();
+      vibes.configure(function(){
+        console.log("SDK Initialized Sucessfully");
+      },
+      function(error){
+        console.log("Error initializing SDK");
+        console.log(error);
+      });
     }
   }
 
   login(){
     if(this.inCordova ===false){
-      this.displayError();
+      this.displayCordovaError();
       return;
     }
-    vibes.configure();
-    vibes.registerDevice();
-    let toast = this.toastCtrl.create({
-      message: 'User logged in',
-      duration: 3000
-    });
-    toast.present();
+    var msg = null;
+      vibes.registerDevice(function(credentials){
+        let deviceId = credentials.device_id;
+        let authToken=credentials.auth_token;
+        msg='Device id is ['+deviceId+'] and authToke is['+authToken+']';
+        console.log(msg);
+      },function(errorMsg){
+        msg = errorMsg;
+        console.log(msg);
+      });
+    
   }
 
 
-  private displayError(){
+  private displayCordovaError(){
     let msg = 'Cordova is not available - Run in physical device';
+      console.error(msg);
+      let toast = this.toastCtrl.create({
+        message: msg,
+        duration: 3000
+      });
+      toast.present();
+      return;
+  }
+
+  private display(msg){
       console.error(msg);
       let toast = this.toastCtrl.create({
         message: msg,
