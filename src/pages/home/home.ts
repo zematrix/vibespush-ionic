@@ -10,7 +10,9 @@ export class HomePage {
   username: string = 'joe@example.com';
   password: string = "password";
   inCordova: boolean = false;
-  
+  appId:string ='edd37b43-9023-4db3-8f66-4a3f335afc30';
+  appUrl: string = 'https://public-api-uat.vibescm.com/mobile_apps';
+  token: string = "token";
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public platform: Platform) {
@@ -22,11 +24,16 @@ export class HomePage {
       this.displayCordovaError();
     }else{
       this.inCordova = true;
-      vibes.configure(function(){
+      let tk = window.localStorage.getItem('pushToken');
+      console.log(tk);
+      if(tk){
+        this.token  = tk;
+      }
+      vibes.configure(this.appId,this.appUrl,
+      function(){
         console.log("SDK Initialized Sucessfully");
       },
       function(error){
-        console.log("Error initializing SDK");
         console.log(error);
       });
     }
@@ -39,8 +46,9 @@ export class HomePage {
     }
     var msg = null;
       vibes.registerDevice(function(credentials){
-        let deviceId = credentials.device_id;
-        let authToken=credentials.auth_token;
+        let json = JSON.parse(credentials);
+        let deviceId = json.device_id;
+        let authToken = json.auth_token;
         msg='Device id is ['+deviceId+'] and authToke is['+authToken+']';
         console.log(msg);
       },function(errorMsg){
@@ -56,15 +64,18 @@ export class HomePage {
       return;
     }
     var msg = null;
-    console.log("calling unregisterDevice");
-    vibes.unregisterDevice(function(){
+
+    console.log("calling associatePerson");
+    vibes.associatePerson("person1",function(){
     },function(errorMsg){
       msg = errorMsg;
       console.log(msg);
     });
 
+    
+
     console.log("calling registerPush");
-    vibes.registerPush("abcd",function(){
+    vibes.registerPush(this.token,function(){
       console.log(msg);
     },function(errorMsg){
       msg = errorMsg;
@@ -78,12 +89,13 @@ export class HomePage {
       console.log(msg);
     });
 
-    console.log("calling associatePerson");
-    vibes.associatePerson("person1",function(){
+    console.log("calling unregisterDevice");
+    vibes.unregisterDevice(function(){
     },function(errorMsg){
       msg = errorMsg;
       console.log(msg);
     });
+    
   }
 
 
@@ -106,5 +118,13 @@ export class HomePage {
       });
       toast.present();
       return;
+  }
+
+  onFunctionCompleted = (_params) => {
+    return new Promise((resolve, reject) => {
+      let msg = _params.msg;
+      this.display(msg);
+      resolve();
+    });
   }
 }
