@@ -84,5 +84,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.2.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
-    <plugin name="vibespush-cordova-plugin" spec="https://github.com/VibesDev/push-sdk-cordova-android.git" />
+    <plugin name="vibespush-cordova-plugin" spec="file:../push-sdk-cordova-android" />
 </widget>

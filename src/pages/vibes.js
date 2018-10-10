@@ -1,7 +1,7 @@
 // Empty constructor
 module.exports = {
 
-  //Cal the sdk to register a device without caring about success or failure
+  //Cal the sdk to register a device, with appropriate callback methods
   configure: function(successCallback, errorCallback) {
     var options = {};
     cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'configure', [options]);
@@ -13,28 +13,28 @@ module.exports = {
     cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'registerDevice', [options]);
   },
 
-  //Call the sdk to unregister a device without caring about success or failure
-  unregisterDevice: function() {
+  //Call the sdk to unregister a device, with appropriate callback methods
+  unregisterDevice: function(successCallback, errorCallback) {
     var options = {};
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'unregisterDevice', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'unregisterDevice', [options]);
   },
-  //Call the sdk to register a push token without caring about success or failure
-  registerPush: function(token) {
+  //Call the sdk to register a push token, with appropriate callback methods
+  registerPush: function(token, successCallback, errorCallback) {
     var options = {};
     options.token = token;
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'registerPush', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'registerPush', [options]);
   },
 
-  //Call the sdk to unregister a push token without caring about success or failure
-  unregisterPush: function() {
+  //Call the sdk to unregister a push token, with appropriate callback methods
+  unregisterPush: function(successCallback, errorCallback) {
     var options = {};
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'unregisterPush', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'unregisterPush', [options]);
   },
 
-  //Call the sdk to associate a person with a device via their external id. Ignores  success or failure
-  associatePerson: function(externalPersonId) {
+  //Call the sdk to associate a person with a device via their external id, with appropriate callback methods
+  associatePerson: function(externalPersonId, successCallback, errorCallback) {
     var options = {};
     options.externalPersonId = externalPersonId;
-    cordova.exec(null, null, 'VibesCordovaPlugin', 'associatePerson', [options]);
+    cordova.exec(successCallback, errorCallback, 'VibesCordovaPlugin', 'associatePerson', [options]);
   }
 };

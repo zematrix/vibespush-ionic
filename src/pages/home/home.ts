@@ -50,6 +50,42 @@ export class HomePage {
     
   }
 
+  test(){
+    if(this.inCordova ===false){
+      this.displayCordovaError();
+      return;
+    }
+    var msg = null;
+    console.log("calling unregisterDevice");
+    vibes.unregisterDevice(function(){
+    },function(errorMsg){
+      msg = errorMsg;
+      console.log(msg);
+    });
+
+    console.log("calling registerPush");
+    vibes.registerPush("abcd",function(){
+      console.log(msg);
+    },function(errorMsg){
+      msg = errorMsg;
+      console.log(msg);
+    });
+    
+    console.log("calling unregisterPush");
+    vibes.unregisterPush(function(){
+    },function(errorMsg){
+      msg = errorMsg;
+      console.log(msg);
+    });
+
+    console.log("calling associatePerson");
+    vibes.associatePerson("person1",function(){
+    },function(errorMsg){
+      msg = errorMsg;
+      console.log(msg);
+    });
+  }
+
 
   private displayCordovaError(){
     let msg = 'Cordova is not available - Run in physical device';
